@@ -9,6 +9,6 @@ task :console do
 end
 
 task :run do
-  login = Login.new
+  login = UserLogin.new
   login.run
 end

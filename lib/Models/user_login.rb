@@ -1,8 +1,9 @@
-class Login
+class UserLogin
 
   def run
     system('clear')
     get_input
+    binding.pry
     show_menu
   end
 
@@ -31,6 +32,7 @@ class Login
       puts "Please enter your pin:"
       while pin_input = STDIN.gets.chomp.to_i
         returning = User.all.find_by(pin: pin_input)
+        @returning = returning
         if !returning || pin_input != Integer(pin_input)
           binding.pry
           puts "Please enter valid pin or create an account."
@@ -38,7 +40,7 @@ class Login
           puts prompt
       else
         puts "Welcome back, #{returning.name}!"
-        # self.show_menu
+        show_menu
         #put next menu here
         end
       end
@@ -50,8 +52,8 @@ class Login
       while new_pin = STDIN.gets.chomp.to_i
         if new_pin.is_a? Integer
           @user = User.create(name: user_name, pin: new_pin)
-          returning = User.all.find_by(pin: new_pin)
-          puts "Welcome #{returning.name}!"
+          puts "Welcome #{@user.name}!"
+          show_menu
           #menu here
         else
           puts "Please enter a valid pin:"
@@ -66,7 +68,7 @@ class Login
 def show_menu
   prompt = "Select an option from the list below:
           1) Look at my portfolio.
-          2) Search stocks by name.
+          2) Search stocks.
           3) See trending stocks.
           4) Exit."
   puts prompt
@@ -76,17 +78,33 @@ def show_menu
   while selection != 1 && selection != 2 && selection != 3 && selection != 4
     puts "Please select a valid option."
     puts
-    StockMenuOption.menu_options
     selection = STDIN.gets.chomp.to_i
   end
 
   if selection == 1
-
+    puts "Here are your stocks:"
+    puts
+    x = @returning.stocks
+    y = x.collect do |stock|
+      stock.name
+    end
+    puts y
+    puts
+    puts "What would you like to do next?"
+    puts
+    puts "1) Remove stock.
+          2) Search stocks.
+          3) See trending stocks.
+          4) Exit."
+    ###
+    binding.pry
     #link to user portfolio
   elsif selection == 2
-    #see trending stocks
+
+
+    #research stocks by name
   elsif selection == 3
-    #search stocks by name
+    #see trending stocks
   elsif selection == 4
     #exit back to main menu
   end
