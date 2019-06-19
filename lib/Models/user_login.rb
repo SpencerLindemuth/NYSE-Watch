@@ -47,8 +47,8 @@
       puts "Please enter a 4 digit pin:"
       while new_pin = gets.chomp.to_i
         if new_pin.is_a? Integer
-          user = User.create(name: user_name, pin: new_pin)
-          puts "Welcome #{user.name}!"
+          $CurrentUser = User.create(name: user_name, pin: new_pin)
+          puts "Welcome #{$CurrentUser.name}!"
           show_menu
         else
           puts "Please enter a valid pin:"
@@ -80,7 +80,7 @@ def show_menu
     begin
     puts "Here are your stocks:"
     puts
-    x = @returning.stocks
+    x = $CurrentUser.stocks
     y = x.collect do |stock|
       stock.name
     end
