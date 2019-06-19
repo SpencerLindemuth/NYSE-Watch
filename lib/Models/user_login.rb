@@ -1,11 +1,9 @@
-class UserLogin
-
-  def run
-    system('clear')
-    get_input
-    binding.pry
-    show_menu
-  end
+  #
+  # def run
+  #   system('clear')
+  #   get_input
+  #   show_menu
+  # end
 
 
 
@@ -13,6 +11,7 @@ class UserLogin
 ################ Welcome Screen ##################################################
 
   def welcome
+    system('clear')
     puts "Welcome to NYSE Watch!"
   end
 
@@ -108,8 +107,4 @@ def show_menu
   elsif selection == 4
     #exit back to main menu
   end
-end
-
-
-
 end
