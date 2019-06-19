@@ -31,16 +31,13 @@
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
         returning = User.all.find_by(pin: pin_input)
-        @returning = returning
         if !returning || pin_input != Integer(pin_input)
-          binding.pry
           puts "Please enter valid pin or create an account."
           puts
           puts prompt
       else
         puts "Welcome back, #{returning.name}!"
         show_menu
-        #put next menu here
         end
       end
 
@@ -50,10 +47,9 @@
       puts "Please enter a 4 digit pin:"
       while new_pin = gets.chomp.to_i
         if new_pin.is_a? Integer
-          @user = User.create(name: user_name, pin: new_pin)
-          puts "Welcome #{@user.name}!"
+          user = User.create(name: user_name, pin: new_pin)
+          puts "Welcome #{user.name}!"
           show_menu
-          #menu here
         else
           puts "Please enter a valid pin:"
           new_pin = gets.chomp
