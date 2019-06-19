@@ -97,7 +97,7 @@ def show_menu
     end
     #link to user portfolio
   elsif selection == 2
-    
+    user_stock_research_menu
 
     #research stocks by name
   elsif selection == 3
