@@ -81,6 +81,7 @@ def show_menu
   end
 
   if selection == 1
+    begin
     puts "Here are your stocks:"
     puts
     x = @returning.stocks
@@ -95,8 +96,9 @@ def show_menu
           2) Search stocks.
           3) See trending stocks.
           4) Exit."
-    ###
-    binding.pry
+    rescue
+      puts "You currently have no stocks, please add through Research tab."
+    end
     #link to user portfolio
   elsif selection == 2
 
