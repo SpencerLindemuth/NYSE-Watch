@@ -20,16 +20,16 @@
     prompt = "Type 1) to enter your pin or type or 2) to create a new account."
     puts
     puts prompt
-    selection = STDIN.gets.chomp.to_i
+    selection = gets.chomp.to_i
 
     while selection != 1 && selection != 2
       puts "Please select an option from the main menu:"
       puts prompt
-      selection = STDIN.gets.chomp.to_i
+      selection = gets.chomp.to_i
     end
     if selection == 1
       puts "Please enter your pin:"
-      while pin_input = STDIN.gets.chomp.to_i
+      while pin_input = gets.chomp.to_i
         returning = User.all.find_by(pin: pin_input)
         @returning = returning
         if !returning || pin_input != Integer(pin_input)
@@ -46,9 +46,9 @@
 
     else selection == 2
       puts "What's your name?"
-      user_name = STDIN.gets.chomp
+      user_name = gets.chomp
       puts "Please enter a 4 digit pin:"
-      while new_pin = STDIN.gets.chomp.to_i
+      while new_pin = gets.chomp.to_i
         if new_pin.is_a? Integer
           @user = User.create(name: user_name, pin: new_pin)
           puts "Welcome #{@user.name}!"
@@ -56,7 +56,7 @@
           #menu here
         else
           puts "Please enter a valid pin:"
-          new_pin = STDIN.gets.chomp
+          new_pin = gets.chomp
         end
       end
     end
@@ -72,12 +72,12 @@ def show_menu
           4) Exit."
   puts prompt
 
-  selection = STDIN.gets.chomp.to_i
+  selection = gets.chomp.to_i
 
   while selection != 1 && selection != 2 && selection != 3 && selection != 4
     puts "Please select a valid option."
     puts
-    selection = STDIN.gets.chomp.to_i
+    selection = gets.chomp.to_i
   end
 
   if selection == 1
