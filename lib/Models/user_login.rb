@@ -29,7 +29,7 @@
           get_input
           break
         elsif !$CurrentUser || pin_input != Integer(pin_input)
-          puts "Please enter valid pin or create an account."
+          puts 'Please enter valid pin or enter "back" to create an account.'
           puts
         else
         puts "Welcome back, #{$CurrentUser.name}!"
