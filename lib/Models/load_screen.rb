@@ -1,4 +1,4 @@
-def load_screen
+def load_screen(symbol)
     system('clear')
     puts "[                    ]"
     sleep(0.1)
@@ -44,6 +44,7 @@ def load_screen
     system('clear')
     puts "[" + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "      ]"
     sleep(0.1)
+    profile = stock_full_profile(symbol)
     system('clear')
     puts "[" + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "     ]"
     sleep(0.1)
@@ -63,4 +64,5 @@ def load_screen
     puts "[" + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "|".green + "]"
     sleep(0.1)
     system('clear')
+    profile
 end

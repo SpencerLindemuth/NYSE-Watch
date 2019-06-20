@@ -8,6 +8,7 @@ def edit_portfolio(rerun = 0)
     if $CurrentUser.stocks.count > 0
         puts "#{$CurrentUser.name}'s current portfolio:"
         puts
+        update_portfolio_prices($CurrentUser)
         x = $CurrentUser.stocks
         rows = []
         x.each do |stock|
