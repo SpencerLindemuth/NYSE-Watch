@@ -40,7 +40,7 @@
     else selection == 2
       system('clear')
       invalid = true
-      while invalid = true
+      while invalid == true
         puts "Please enter a username:"
         username = gets.chomp
         if User.all.find_by name: username
