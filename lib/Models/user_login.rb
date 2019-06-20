@@ -1,5 +1,3 @@
-require 'pry'
-
   def welcome
     system('clear')
     puts "Welcome to NYSE Watch!"
