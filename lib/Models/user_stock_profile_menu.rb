@@ -16,7 +16,7 @@ def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
     puts
     puts "Rating".red
     if profile["recommendation"].empty?
-        puts "  No rating available for #{symbol}".blue
+        puts "  No rating available for #{symbol}".magenta
     else
         puts "  Score:".red + "              #{profile['score']}".blue
         puts "  Recommendation:".red + "     #{profile['recommendation']}".blue
