@@ -95,33 +95,93 @@ def show_menu
 end
 
 ###################### Trending Stocks ##############################################
-  def trending_stocks
+  def trending_stocks(rerun = 0, p_cache = {}, n_cache = {})
     system('clear')
+    if rerun == 1
+      negative_movers = n_cache
+      positive_movers = p_cache
+      puts "Please enter a valid command".red.bold
+    elsif rerun == 2
+      puts "Please enter a valid symbol".red.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    elsif rerun == 3
+      puts "Removed!".blue.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    elsif rerun == 4
+      puts "Added!".green.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    else
+    negative_movers = biggest_negative_movers
+    positive_movers = biggest_positive_movers
+    end
+    puts
     puts "Here are today's biggest postive movers:".black
     puts
-    biggest_positive_movers.each do |mover|
-    puts "#{mover['companyName']}".blue + " Percent Increase:".black + " #{mover['changesPercentage']}".green
-    puts
+    rows = []
+    positive_movers.each do |mover|
+      if $CurrentUser.stocks.find_by symbol: mover['ticker']
+        rows << ["** #{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".green, "#{mover['changesPercentage']}".green]
+      else
+        rows << ["#{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".green, "#{mover['changesPercentage']}".green]
+      end
     end
-    puts "--------------------------------------------------------------------------"
+    table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Percent Change"], :rows => rows, :style => {:width => 80}
+    puts table
+    puts
+    puts
     puts "Here are today's biggest negative movers:".black
     puts
-    biggest_negative_movers.each do |mover|
-      mover["companyName"]
-      puts "#{mover['companyName']}".blue + " #{mover['changesPercentage']}".red
-      puts
+    rows = []
+    negative_movers.each do |mover|
+      if $CurrentUser.stocks.find_by symbol: mover['ticker']
+        rows << ["** #{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".red, "#{mover['changesPercentage']}".red]
+      else
+        rows << ["#{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".red, "#{mover['changesPercentage']}".red]
+      end
     end
+    table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Percent Change"], :rows => rows, :style => {:width => 80}
+    puts table
+    puts ""
     puts "What you you like to do next?"
-    puts
-    puts "1) Edit my portfolio          2) Search stocks"
-    puts "3) Exit"
+    puts "1) Add a stock to portfolio   2)Remove a stock from portfolio"
+    puts "3) View Portfolio             4)Main menu"
 
     selection = gets.chomp.to_i
-    if selection == 1
+    case selection
+    when 1
+      add_stock_from_trending(positive_movers, negative_movers)
+    when 2
+      delete_stock_from_trending(positive_movers, negative_movers)
+    when 3
       edit_portfolio
-    elsif selection == 2
-      user_stock_research_menu
-    elsif selection == 3
+    when 4
       show_menu
+    else
+      trending_stocks(1, positive_movers, negative_movers)
     end
   end
+
+  def delete_stock_from_trending(p_cache, n_cache)
+    puts "Please enter symbol of stock to remove:"
+    input = gets.chomp.upcase
+    if valid_symbol?(input)
+        remove_from_portfolio(input)
+        trending_stocks(3, p_cache, n_cache)
+    else
+        trending_stocks(2, p_cache, n_cache)
+    end
+end
+
+def add_stock_from_trending(p_cache, n_cache)
+  puts "Please enter symbol of stock to add:"
+  input = gets.chomp.upcase
+  if valid_symbol?(input)
+      add_to_portfolio(input)
+      trending_stocks(4, p_cache, n_cache)
+  else
+      trending_stocks(2, p_cache, n_cache)
+  end
+end
