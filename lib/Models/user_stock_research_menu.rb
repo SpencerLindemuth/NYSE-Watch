@@ -1,4 +1,5 @@
 def user_stock_research_menu(rerun = 0)
+    system('clear')
     if rerun == 2
         puts 'Please enter stock symbol or stock name to lookup or type "back" to go back'
         input = gets.chomp
@@ -7,27 +8,24 @@ def user_stock_research_menu(rerun = 0)
         elsif input == "back"
             show_menu
         else
-            rerun = 2
             print_recommendations(input)
             user_stock_research_menu(2)
         end
-    end
-    system('clear')
-    if rerun == 1
+    elsif rerun == 1
         puts 'Sorry no match for that search. Try a different search term.'
-        puts
+        user_stock
     end
-    puts 'Please enter stock symbol or stock name to lookup or type "back" to go back'
-    input = gets.chomp
-    if valid_symbol?(input)
-        user_stock_profile_menu(input)
-    elsif input == "back"
-        show_menu
-    else
-        rerun = 2
-        print_recommendations(input)
-        user_stock_research_menu(2)
-    end
+
+        puts 'Please enter stock symbol or stock name to lookup or type "back" to go back'
+        input = gets.chomp
+        if valid_symbol?(input)
+            user_stock_profile_menu(input)
+        elsif input == "back"
+            show_menu
+        else
+            print_recommendations(input)
+            user_stock_research_menu(2)
+        end
 end
 
 def print_recommendations(input)

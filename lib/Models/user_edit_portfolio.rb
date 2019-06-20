@@ -5,7 +5,7 @@ def edit_portfolio(rerun = 0)
     elsif rerun == 2
         puts "Please pick a valid symbol and try again"
     end
-    if $CurrentUser.stocks
+    if $CurrentUser.stocks.count > 0
         puts "#{$CurrentUser.name}'s current portfolio:"
         puts
         x = $CurrentUser.stocks
