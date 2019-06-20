@@ -1,11 +1,15 @@
+require 'pry'
 
   def welcome
     system('clear')
     puts "Welcome to NYSE Watch!"
   end
 
-  def get_input
+  def get_input(rerun = 0)
     welcome
+    if rerun == 1
+      puts "Please enter a valid command!".red
+    end
     prompt = "Type 1) to enter your pin or type or 2) to create a new account."
     puts
     puts prompt
@@ -18,31 +22,44 @@
     end
     if selection == 1
       system('clear')
+      puts "Please enter your username:"
+      user_name = gets.chomp
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
-        $CurrentUser = User.all.find_by(pin: pin_input)
+        $CurrentUser = User.all.find_by(name: user_name, pin: pin_input)
         if !$CurrentUser || pin_input != Integer(pin_input)
           puts "Please enter valid pin or create an account."
           puts
-          puts prompt
-      else
+        else
+        puts "Welcome back, #{$CurrentUser.name}!"
         show_menu
         end
       end
 
     else selection == 2
       system('clear')
-      puts "What's your name?"
-      user_name = gets.chomp
-      puts "Please enter a 4 digit pin:"
-      while new_pin = gets.chomp.to_i
-        if new_pin.is_a? Integer
-          $CurrentUser = User.create(name: user_name, pin: new_pin)
+      invalid = true
+      while invalid = true
+        puts "Please enter a username:"
+        username = gets.chomp
+        if User.all.find_by name: username
+          puts "The username that you entered is already taken."
+        else
+          invalid = false
+          break
+        end
+      end
+      system('clear')
+      while true
+        puts "Please enter a 4 digit pin:"
+        new_pin = gets.chomp
+        if new_pin != Integer(new_pin) && new_pin.length != 4
+          puts "Please enter a vaild pin"
+        else
+          $CurrentUser = User.create(name: username, pin: new_pin)
           puts "Welcome #{$CurrentUser.name}!"
           show_menu
-        else
-          puts "Please enter a valid pin:"
-          new_pin = gets.chomp
+          break
         end
       end
     end
