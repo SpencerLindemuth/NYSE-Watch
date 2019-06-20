@@ -38,7 +38,7 @@ def print_recommendations(input)
             puts 'Did you mean any of these stocks?'
             puts
             recommendations.each do |stock|
-                puts "Name: " + "#{stock[1]}".green + " Symbol: " + "#{stock[0]}".blue
+                puts "Name: " + "#{stock[1]}".blue + " Symbol: " + "#{stock[0]}".magenta
                 puts
             end
         end 
