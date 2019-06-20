@@ -1,7 +1,11 @@
-def user_stock_profile_menu(symbol)
+def user_stock_profile_menu(symbol, cache = {})
     system('clear')
     while true
-        profile = stock_full_profile(symbol)
+        if cache.count == 0
+            profile = stock_full_profile(symbol)
+        else 
+            profile = cache
+        end
         puts "Rating".red
         if profile["recommendation"].empty?
             puts "  No rating available for #{symbol}".blue
@@ -40,7 +44,7 @@ def user_stock_profile_menu(symbol)
         input = gets.chomp.to_i
         case input
         when 1
-            user_history_menu(symbol)
+            user_history_menu(symbol, profile)
         when 2
         when 3
             user_stock_research_menu

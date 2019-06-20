@@ -1,4 +1,4 @@
-def user_history_menu(symbol)
+def user_history_menu(symbol, cache = {})
     while true
         system('clear')
         puts "-----------------------------------------"
@@ -7,7 +7,12 @@ def user_history_menu(symbol)
         puts "5) 1 Year          6) 5 Years"
         puts 'or type "back" to go back'
         puts
-        input = gets.chomp.to_i
+        input = gets.chomp
+        if input == "back"
+            user_stock_profile_menu(symbol, cache)
+        else
+            input = input.to_i
+        end
         duration = 0
 
         case input
