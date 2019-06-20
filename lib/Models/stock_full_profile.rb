@@ -3,6 +3,7 @@ def stock_full_profile(symbol)
     get_rating(symbol, profile_hash)
     get_prices(symbol, profile_hash)
     get_current_price(symbol, profile_hash)
+    get_company_name(symbol, profile_hash)
     profile_hash
 end
 
@@ -46,3 +47,13 @@ end
         profile_hash["price"] = price
         profile_hash
     end
+    
+    def get_company_name(symbol, profile_hash)
+        url = "https://financialmodelingprep.com/api/v3/company/profile/#{symbol}"
+        response_string = RestClient.get(url)
+        response_hash = JSON.parse(response_string)
+        name = response_hash["profile"]["companyName"]
+        profile_hash["name"]= name
+        profile_hash
+    end
+

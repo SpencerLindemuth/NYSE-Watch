@@ -1,6 +1,8 @@
+require_relative './load_screen.rb'
 def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
     if cache.count == 0
-        profile = stock_full_profile(symbol)
+        system('clear')
+        profile = load_screen(symbol)
     else 
         profile = cache
     end
@@ -12,7 +14,7 @@ def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
     rescue
     end
     system('clear')
-    puts "#{stock_attributes(symbol).name}".blue
+    puts "#{profile['name']}".blue
     puts
     puts "Rating".red
     if profile["recommendation"].empty?
@@ -85,4 +87,3 @@ def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
             puts "Please enter a valid command"
         end
 end
-

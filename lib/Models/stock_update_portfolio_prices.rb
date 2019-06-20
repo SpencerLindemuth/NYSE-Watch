@@ -7,5 +7,6 @@ def update_portfolio_prices(user)
             updated_price = response_hash["price"]
         end
         stock.price = updated_price
+        stock.save
     end
 end

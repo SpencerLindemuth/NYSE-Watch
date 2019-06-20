@@ -72,6 +72,7 @@ def show_menu
   system('clear')
   if $CurrentUser.stocks.count > 0
     puts
+    update_portfolio_prices($CurrentUser)
     x = $CurrentUser.stocks
     rows = []
     x.each do |stock|
@@ -83,6 +84,15 @@ def show_menu
     end
     table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Day Change"], :rows => rows
     puts table
+    end
+    if market_open?
+      puts
+      puts "The market is currently" + " " + "open".green.underline
+      puts
+    else
+      puts
+      puts "The market is currently" + " " + "closed".red.underline
+      puts
     end
   puts
   puts "Welcome, #{$CurrentUser.name}!"
