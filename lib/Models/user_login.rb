@@ -72,7 +72,7 @@ def show_menu
   puts "Select an option from the list below:"
   puts "1) Edit my portfolio          2) Search stocks"
   puts "3) See trending stocks        4) Exit"
-  
+
 
   selection = gets.chomp.to_i
 
@@ -97,18 +97,31 @@ end
 ###################### Trending Stocks ##############################################
   def trending_stocks
     system('clear')
-    puts "Here are today's biggest postive movers:"
+    puts "Here are today's biggest postive movers:".black
     puts
     biggest_positive_movers.each do |mover|
     puts "#{mover['companyName']}".blue + " Percent Increase:".black + " #{mover['changesPercentage']}".green
     puts
     end
     puts "--------------------------------------------------------------------------"
-    puts "Here are today's biggest negative movers:"
+    puts "Here are today's biggest negative movers:".black
     puts
     biggest_negative_movers.each do |mover|
       mover["companyName"]
       puts "#{mover['companyName']}".blue + " #{mover['changesPercentage']}".red
       puts
+    end
+    puts "What you you like to do next?"
+    puts
+    puts "1) Edit my portfolio          2) Search stocks"
+    puts "3) Exit"
+
+    selection = gets.chomp.to_i
+    if selection == 1
+      edit_portfolio
+    elsif selection == 2
+      user_stock_research_menu
+    elsif selection == 3
+      show_menu
     end
   end
