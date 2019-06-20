@@ -25,6 +25,6 @@ require_relative '../lib/models/user_remove_from_portfolio.rb'
 require_relative '../lib/models/user_edit_portfolio.rb'
 
 
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/nyse_watch.db')
 ActiveRecord::Base.logger = nil
 
