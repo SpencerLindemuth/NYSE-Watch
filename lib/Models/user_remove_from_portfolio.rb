@@ -1,3 +1,5 @@
 def remove_from_portfolio(symbol)
-    $CurrentUser.stocks.where(symbol: symbol).destroy_all
+    stock = $CurrentUser.stocks.find_by symbol: symbol
+    id = stock.id
+    $CurrentUser.stocks.delete(id)
 end

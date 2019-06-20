@@ -4,7 +4,6 @@ require 'sinatra/activerecord/rake'
 
 desc 'starts a console'
 task :console do
-  ActiveRecord::Base.logger.level = 1
   Pry.start
 end
 

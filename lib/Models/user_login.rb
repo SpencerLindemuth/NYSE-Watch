@@ -54,12 +54,11 @@
 def show_menu
   system('clear')
   puts "Welcome, #{$CurrentUser.name}!"
-  prompt = "Select an option from the list below:
-          1) Look at my portfolio.
-          2) Search stocks.
-          3) See trending stocks.
-          4) Exit."
-  puts prompt
+  puts
+  puts "Select an option from the list below:"
+  puts "1) Edit my portfolio          2) Search stocks"
+  puts "3) See trending stocks        4) Exit"
+  
 
   selection = gets.chomp.to_i
 
@@ -70,30 +69,13 @@ def show_menu
   end
 
   if selection == 1
-    begin
-    system('clear')
-    puts "Here are your stocks:"
-    puts
-    x = $CurrentUser.stocks
-    y = x.collect do |stock|
-      stock.name
-    end
-    puts y
-    puts
-    puts "What would you like to do next?"
-    puts
-    puts "1) Remove stock.
-          2) Search stocks.
-          3) See trending stocks.
-          4) Exit."
-    rescue
-      puts "You currently have no stocks, please add through Research tab."
-    end
+    edit_portfolio
   elsif selection == 2
     user_stock_research_menu
   elsif selection == 3
     trending_stocks
   elsif selection == 4
+    exit
     #exit back to main menu
   end
 end
