@@ -51,6 +51,7 @@
 ################################# Stock Options Menu #########################################
 
 def show_menu
+  system('clear')
   prompt = "Select an option from the list below:
           1) Look at my portfolio.
           2) Search stocks.

@@ -1,7 +1,11 @@
-def user_stock_profile_menu(symbol)
+def user_stock_profile_menu(symbol, cache = {})
     system('clear')
     while true
-        profile = stock_full_profile(symbol)
+        if cache.count == 0
+            profile = stock_full_profile(symbol)
+        else 
+            profile = cache
+        end
         puts "Rating".red
         if profile["recommendation"].empty?
             puts "  No rating available for #{symbol}".blue
@@ -37,13 +41,17 @@ def user_stock_profile_menu(symbol)
         puts "1) See History        2) Add to portfolio"
         puts "3) New Search         4) Main Menu"
         puts
-        input = gets.chomp
-        if input == 1
-        elsif input == 2
-        elsif input == 3
+        input = gets.chomp.to_i
+        case input
+        when 1
+            user_history_menu(symbol, profile)
+        when 2
+        when 3
             user_stock_research_menu
-        elsif input == 4
+        when 4
             show_menu
+        else
+            puts "Please enter a valid command"
         end
     end
 end
