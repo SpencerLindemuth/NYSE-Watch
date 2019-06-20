@@ -25,7 +25,10 @@
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
         $CurrentUser = User.all.find_by(name: user_name, pin: pin_input)
-        if !$CurrentUser || pin_input != Integer(pin_input)
+        if pin_input == 0
+          get_input
+          break
+        elsif !$CurrentUser || pin_input != Integer(pin_input)
           puts "Please enter valid pin or create an account."
           puts
         else
