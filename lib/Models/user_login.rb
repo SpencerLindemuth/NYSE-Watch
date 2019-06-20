@@ -1,6 +1,4 @@
 
-<<<<<<< HEAD
-=======
   def welcome
     system('clear')
     puts "Welcome to NYSE Watch!"
@@ -114,4 +112,3 @@ end
       puts
     end
   end
->>>>>>> 3f0e67a5e17c4eb5a097b3073ef645ecbc28bb05
