@@ -23,7 +23,7 @@
       puts "Please enter your username:"
       user_name = gets.chomp
       puts "Please enter your pin:"
-      while pin_input = gets.chomp
+      while pin_input = gets.chomp.to_i
         $CurrentUser = User.all.find_by(name: user_name, pin: pin_input)
         if pin_input == 0
           get_input
