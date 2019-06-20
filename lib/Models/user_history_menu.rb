@@ -56,18 +56,18 @@ def print_history(symbol, duration, rerun=0, added=0)
     if history["change_direction"] == "up"
         puts "History:".red
         puts "      Closing price on #{history["first_date"]}:".blue + " #{history["first_close"]}"
-        puts "          Highest Price: " + " $#{history["historical_high"]}".green + "    (#{history["historical_high_date"]})".blue
-        puts "          Lowest Price:  " + " $#{history["historical_low"]}".red + "   (#{history["historical_low_date"]})".blue
-        puts "          Total Growth:  " + " $#{(history["current_close"] - history["first_close"]).round(4)}".green
-        puts "          Change Percent:" + " #{history["change_percent"].round(4)}".blue
-        puts "      Close price on #{history["current_date"]}: #{history["current_close"]}"
+        puts "          Highest Price: " + " $#{(history["historical_high"]).round(2)}".green + "    (#{history["historical_high_date"]})".blue
+        puts "          Lowest Price:  " + " $#{(history["historical_low"]).round(2)}".red + "       (#{history["historical_low_date"]})".blue
+        puts "          Total Growth:  " + " $#{(history["current_close"] - history["first_close"]).round(2)}".green
+        puts "          Change Percent:" + " #{history["change_percent"].round(2)}%".green
+        puts "      Close price on #{history["current_date"]}:".blue + " #{history["current_close"]}"
     elsif history["change_direction"] == "down"
         puts "#{symbol} history:".red
         puts "      Closing price on #{history["first_date"]}: #{history["first_close"]}"
-        puts "          Highest Price: " + " $#{history["historical_high"]}".green + "    (#{history["historical_high_date"]})".blue
-        puts "          Lowest Price:  " + " $#{history["historical_low"]}".red + "   (#{history["historical_low_date"]})".blue
-        puts "          Total Growth:  " + " $#{(history["current_close"] - history["first_close"]).round(4)}".red
-        puts "          Change Percent:" + " #{history["change_percent"].round(4)}".blue
+        puts "          Highest Price: " + " $#{(history["historical_high"]).round(2)}".green + "    (#{history["historical_high_date"]})".blue
+        puts "          Lowest Price:  " + " $#{(history["historical_low"]).round(2)}".red + "   (#{history["historical_low_date"]})".blue
+        puts "          Total Growth:  " + " $#{(history["current_close"] - history["first_close"]).round(2)}".red
+        puts "          Change Percent:" + " #{history["change_percent"].round(2)}%".red
         puts "      Close price on #{history["current_date"]}:".blue + " $#{history["current_close"]}"
     end
     if added == 0
