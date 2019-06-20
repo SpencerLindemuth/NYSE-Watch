@@ -18,6 +18,7 @@
       selection = gets.chomp.to_i
     end
     if selection == 1
+      system('clear')
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
         returning = User.all.find_by(pin: pin_input)
@@ -32,6 +33,7 @@
       end
 
     else selection == 2
+      system('clear')
       puts "What's your name?"
       user_name = gets.chomp
       puts "Please enter a 4 digit pin:"
@@ -92,19 +94,19 @@ def show_menu
     trending_stocks
   elsif selection == 4
     #exit back to main menu
-
   end
 end
 
 ###################### Trending Stocks ##############################################
   def trending_stocks
+    system('clear')
     puts "Here are today's biggest postive movers:"
     puts
     biggest_positive_movers.each do |mover|
     puts "#{mover['companyName']}".blue + " Percent Increase:".black + " #{mover['changesPercentage']}".green
     puts
     end
-    puts "------------------------------------------"
+    puts "--------------------------------------------------------------------------"
     puts "Here are today's biggest negative movers:"
     puts
     biggest_negative_movers.each do |mover|
