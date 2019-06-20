@@ -1,13 +1,3 @@
-  #
-  # def run
-  #   system('clear')
-  #   get_input
-  #   show_menu
-  # end
-
-
-
-
 ################ Welcome Screen ##################################################
 
   def welcome
@@ -96,14 +86,30 @@ def show_menu
     rescue
       puts "You currently have no stocks, please add through Research tab."
     end
-    #link to user portfolio
   elsif selection == 2
     user_stock_research_menu
-
-    #research stocks by name
   elsif selection == 3
-    #see trending stocks
+    trending_stocks
   elsif selection == 4
     #exit back to main menu
+
   end
 end
+
+###################### Trending Stocks ##############################################
+  def trending_stocks
+    puts "Here are today's biggest postive movers:"
+    puts
+    biggest_positive_movers.each do |mover|
+    puts "#{mover['companyName']}".blue + " Percent Increase:".black + " #{mover['changesPercentage']}".green
+    puts
+    end
+    puts "------------------------------------------"
+    puts "Here are today's biggest negative movers:"
+    puts
+    biggest_negative_movers.each do |mover|
+      mover["companyName"]
+      puts "#{mover['companyName']}".blue + " #{mover['changesPercentage']}".red
+      puts
+    end
+  end
