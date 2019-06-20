@@ -25,3 +25,6 @@
 
 #Starts the menu for when user selects LOGIN>2.Research>
     user_stock_research_menu
+
+#Adds a stock by symbol to the current users portfolio
+    add_to_portfolio(symbol)

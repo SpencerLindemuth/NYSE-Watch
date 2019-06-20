@@ -74,7 +74,7 @@ def print_history(symbol, duration)
         when 2
             user_stock_research_menu
         when 3
-
+            add_to_portfolio(symbol)
         when 4
             show_menu
         else

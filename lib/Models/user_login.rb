@@ -30,13 +30,12 @@
     if selection == 1
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
-        returning = User.all.find_by(pin: pin_input)
-        if !returning || pin_input != Integer(pin_input)
+        $CurrentUser = User.all.find_by(pin: pin_input)
+        if !$CurrentUser || pin_input != Integer(pin_input)
           puts "Please enter valid pin or create an account."
           puts
           puts prompt
       else
-        puts "Welcome back, #{returning.name}!"
         show_menu
         end
       end
@@ -62,6 +61,7 @@
 
 def show_menu
   system('clear')
+  puts "Welcome, #{$CurrentUser.name}!"
   prompt = "Select an option from the list below:
           1) Look at my portfolio.
           2) Search stocks.
@@ -79,6 +79,7 @@ def show_menu
 
   if selection == 1
     begin
+    system('clear')
     puts "Here are your stocks:"
     puts
     x = $CurrentUser.stocks

@@ -1,11 +1,20 @@
-def user_stock_profile_menu(symbol, cache = {})
-    system('clear')
+def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
+    if cache.count == 0
+        profile = stock_full_profile(symbol)
+    else 
+        profile = cache
+    end
+    begin
+    status = $CurrentUser.stocks.find_by symbol: symbol
+    if status
+        add_status = 2
+    end
+    rescue
+    end
     while true
-        if cache.count == 0
-            profile = stock_full_profile(symbol)
-        else 
-            profile = cache
-        end
+        system('clear')
+        puts "#{stock_attributes(symbol).name}".blue
+        puts
         puts "Rating".red
         if profile["recommendation"].empty?
             puts "  No rating available for #{symbol}".blue
@@ -36,23 +45,44 @@ def user_stock_profile_menu(symbol, cache = {})
         # puts "  Recommendation:".red + "     #{profile['recommendation']}".blue
         # puts "  Grade:".red + "     #{profile['rating']}".blue
         puts
-        puts
-        puts "-----------------------------------------"
-        puts "1) See History        2) Add to portfolio"
-        puts "3) New Search         4) Main Menu"
-        puts
-        input = gets.chomp.to_i
-        case input
-        when 1
-            user_history_menu(symbol, profile)
-        when 2
-        when 3
-            user_stock_research_menu
-        when 4
-            show_menu
+        if add_status == 1
+            puts "Added!"
+            puts "-----------------------------------------"
+            puts "1) See History        2) Remove from portfolio"
+            puts "3) New Search         4) Main Menu"
+            puts
+        elsif add_status == 2
+            puts 
+            puts "-----------------------------------------"
+            puts "1) See History        2) Remove from portfolio"
+            puts "3) New Search         4) Main Menu"
+            puts
         else
-            puts "Please enter a valid command"
+            puts 
+            puts "-----------------------------------------"
+            puts "1) See History        2) Add to portfolio"
+            puts "3) New Search         4) Main Menu"
+            puts
         end
+            input = gets.chomp.to_i
+            case input
+            when 1
+                user_history_menu(symbol, profile)
+            when 2
+                if add_status == 0
+                    add_status = 1
+                    add_to_portfolio(symbol)
+                elsif add_status == 1 || add_status == 2
+                    add_status = 0
+                    remove_from_portfolio(symbol)
+                end
+            when 3
+                user_stock_research_menu
+            when 4
+                show_menu
+            else
+                puts "Please enter a valid command"
+            end
     end
 end
 
