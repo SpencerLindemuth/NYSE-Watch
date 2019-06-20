@@ -9,14 +9,16 @@ def edit_portfolio(rerun = 0)
         puts "#{$CurrentUser.name}'s current portfolio:"
         puts
         x = $CurrentUser.stocks
-        puts "Name / (symbol) / Current Price / Day change"
+        rows = []
         x.each do |stock|
             if stock.day_change >= 0
-            puts "#{stock.name} ".blue + "    (#{stock.symbol})   ".red + "    #{stock.price}     ".green + "     #{stock.day_change} ".green
+                rows << ["#{stock.name}".blue, "(#{stock.symbol})".magenta, "$#{stock.price}".green," #{stock.day_change}".green ]
             else
-                puts "#{stock.name} ".blue + "    (#{stock.symbol})   ".red + "    #{stock.price}     ".red + "     #{stock.day_change} ".red
+                rows << ["#{stock.name} ".blue,"(#{stock.symbol})".magenta,"$#{stock.price}".red,"#{stock.day_change}".red]
             end
         end
+        table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Day Change"], :rows => rows
+        puts table
         puts
         puts "What would you like to do next?"
         puts

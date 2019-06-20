@@ -53,6 +53,21 @@
 
 def show_menu
   system('clear')
+  if $CurrentUser.stocks.count > 0
+    puts
+    x = $CurrentUser.stocks
+    rows = []
+    x.each do |stock|
+        if stock.day_change >= 0
+            rows << ["#{stock.name}".blue, "(#{stock.symbol})".magenta, "$#{stock.price}".green," #{stock.day_change}".green ]
+        else
+            rows << ["#{stock.name} ".blue,"(#{stock.symbol})".magenta,"$#{stock.price}".red,"#{stock.day_change}".red]
+        end
+    end
+    table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Day Change"], :rows => rows
+    puts table
+    end
+  puts
   puts "Welcome, #{$CurrentUser.name}!"
   puts
   puts "Select an option from the list below:"
