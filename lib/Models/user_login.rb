@@ -1,5 +1,6 @@
   def welcome
     system('clear')
+    puts Ascii.welcome_words
     puts "Welcome to NYSE Watch!"
   end
 

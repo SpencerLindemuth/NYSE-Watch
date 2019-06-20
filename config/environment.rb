@@ -23,8 +23,7 @@ require_relative '../lib/models/user_history_menu.rb'
 require_relative '../lib/models/user_add_to_portfolio.rb'
 require_relative '../lib/models/user_remove_from_portfolio.rb'
 require_relative '../lib/models/user_edit_portfolio.rb'
-
+require_relative '../lib/models/ascii.rb'
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/nyse_watch.db')
 ActiveRecord::Base.logger = nil
-
