@@ -8,7 +8,7 @@
     if rerun == 1
       puts "Please enter a valid command!".red
     end
-    prompt = "Type 1) to enter your pin or type or 2) to create a new account."
+    prompt = "1) Login \n2) Create a new account."
     puts
     puts prompt
     selection = gets.chomp.to_i
