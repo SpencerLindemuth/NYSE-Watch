@@ -13,7 +13,7 @@
     puts prompt
     selection = gets.chomp.to_i
 
-    while selection != 1 && selection != 2
+    while selection != 1 && selection !=2
       puts "Please select an option from the main menu:"
       puts prompt
       selection = gets.chomp.to_i
@@ -37,7 +37,7 @@
         end
       end
 
-    else selection == 2
+    elsif selection == 2
       system('clear')
       invalid = true
       while invalid == true
