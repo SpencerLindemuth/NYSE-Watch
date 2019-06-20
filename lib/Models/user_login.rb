@@ -1,11 +1,13 @@
-
   def welcome
     system('clear')
     puts "Welcome to NYSE Watch!"
   end
 
-  def get_input
+  def get_input(rerun = 0)
     welcome
+    if rerun == 1
+      puts "Please enter a valid command!".red
+    end
     prompt = "Type 1) to enter your pin or type or 2) to create a new account."
     puts
     puts prompt
@@ -18,31 +20,44 @@
     end
     if selection == 1
       system('clear')
+      puts "Please enter your username:"
+      user_name = gets.chomp
       puts "Please enter your pin:"
       while pin_input = gets.chomp.to_i
-        $CurrentUser = User.all.find_by(pin: pin_input)
+        $CurrentUser = User.all.find_by(name: user_name, pin: pin_input)
         if !$CurrentUser || pin_input != Integer(pin_input)
           puts "Please enter valid pin or create an account."
           puts
-          puts prompt
-      else
+        else
+        puts "Welcome back, #{$CurrentUser.name}!"
         show_menu
         end
       end
 
     else selection == 2
       system('clear')
-      puts "What's your name?"
-      user_name = gets.chomp
-      puts "Please enter a 4 digit pin:"
-      while new_pin = gets.chomp.to_i
-        if new_pin.is_a? Integer
-          $CurrentUser = User.create(name: user_name, pin: new_pin)
+      invalid = true
+      while invalid = true
+        puts "Please enter a username:"
+        username = gets.chomp
+        if User.all.find_by name: username
+          puts "The username that you entered is already taken."
+        else
+          invalid = false
+          break
+        end
+      end
+      system('clear')
+      while true
+        puts "Please enter a 4 digit pin:"
+        new_pin = gets.chomp
+        if new_pin != Integer(new_pin) && new_pin.length != 4
+          puts "Please enter a vaild pin"
+        else
+          $CurrentUser = User.create(name: username, pin: new_pin)
           puts "Welcome #{$CurrentUser.name}!"
           show_menu
-        else
-          puts "Please enter a valid pin:"
-          new_pin = gets.chomp
+          break
         end
       end
     end
@@ -95,33 +110,93 @@ def show_menu
 end
 
 ###################### Trending Stocks ##############################################
-  def trending_stocks
+  def trending_stocks(rerun = 0, p_cache = {}, n_cache = {})
     system('clear')
+    if rerun == 1
+      negative_movers = n_cache
+      positive_movers = p_cache
+      puts "Please enter a valid command".red.bold
+    elsif rerun == 2
+      puts "Please enter a valid symbol".red.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    elsif rerun == 3
+      puts "Removed!".blue.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    elsif rerun == 4
+      puts "Added!".green.bold
+      negative_movers = n_cache
+      positive_movers = p_cache
+    else
+    negative_movers = biggest_negative_movers
+    positive_movers = biggest_positive_movers
+    end
+    puts
     puts "Here are today's biggest postive movers:".black
     puts
-    biggest_positive_movers.each do |mover|
-    puts "#{mover['companyName']}".blue + " Percent Increase:".black + " #{mover['changesPercentage']}".green
-    puts
+    rows = []
+    positive_movers.each do |mover|
+      if $CurrentUser.stocks.find_by symbol: mover['ticker']
+        rows << ["** #{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".green, "#{mover['changesPercentage']}".green]
+      else
+        rows << ["#{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".green, "#{mover['changesPercentage']}".green]
+      end
     end
-    puts "--------------------------------------------------------------------------"
+    table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Percent Change"], :rows => rows, :style => {:width => 80}
+    puts table
+    puts
+    puts
     puts "Here are today's biggest negative movers:".black
     puts
-    biggest_negative_movers.each do |mover|
-      mover["companyName"]
-      puts "#{mover['companyName']}".blue + " #{mover['changesPercentage']}".red
-      puts
+    rows = []
+    negative_movers.each do |mover|
+      if $CurrentUser.stocks.find_by symbol: mover['ticker']
+        rows << ["** #{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".red, "#{mover['changesPercentage']}".red]
+      else
+        rows << ["#{mover['companyName'].truncate(25)}".blue, "#{mover['ticker']}".magenta , "#{mover['price']}".red, "#{mover['changesPercentage']}".red]
+      end
     end
+    table = Terminal::Table.new :headings => ["Stock Name", "Symbol", "Current Price", "Percent Change"], :rows => rows, :style => {:width => 80}
+    puts table
+    puts ""
     puts "What you you like to do next?"
-    puts
-    puts "1) Edit my portfolio          2) Search stocks"
-    puts "3) Exit"
+    puts "1) Add a stock to portfolio   2)Remove a stock from portfolio"
+    puts "3) View Portfolio             4)Main menu"
 
     selection = gets.chomp.to_i
-    if selection == 1
+    case selection
+    when 1
+      add_stock_from_trending(positive_movers, negative_movers)
+    when 2
+      delete_stock_from_trending(positive_movers, negative_movers)
+    when 3
       edit_portfolio
-    elsif selection == 2
-      user_stock_research_menu
-    elsif selection == 3
+    when 4
       show_menu
+    else
+      trending_stocks(1, positive_movers, negative_movers)
     end
   end
+
+  def delete_stock_from_trending(p_cache, n_cache)
+    puts "Please enter symbol of stock to remove:"
+    input = gets.chomp.upcase
+    if valid_symbol?(input)
+        remove_from_portfolio(input)
+        trending_stocks(3, p_cache, n_cache)
+    else
+        trending_stocks(2, p_cache, n_cache)
+    end
+end
+
+def add_stock_from_trending(p_cache, n_cache)
+  puts "Please enter symbol of stock to add:"
+  input = gets.chomp.upcase
+  if valid_symbol?(input)
+      add_to_portfolio(input)
+      trending_stocks(4, p_cache, n_cache)
+  else
+      trending_stocks(2, p_cache, n_cache)
+  end
+end
