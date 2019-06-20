@@ -1,4 +1,3 @@
-require_relative './load_screen.rb'
 def user_stock_profile_menu(symbol, cache = {}, add_status = 0)
     if cache.count == 0
         system('clear')
